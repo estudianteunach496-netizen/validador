@@ -142,7 +142,10 @@ def main():
         if os.path.exists("logo_ids.png"):
             with open("logo_ids.png", "rb") as image_file:
                 encoded_string = base64.b64encode(image_file.read()).decode()
-            st.markdown(f'<img src="data:image/png;base64,{encoded_string}" class="logo-img">', unsafe_allow_html=True)
+            st.markdown(
+                f'<div style="text-align:center;"><img src="data:image/png;base64,{encoded_string}" style="width:150px; margin-bottom:20px;"></div>', 
+                unsafe_allow_html=True
+            )
         
         st.markdown('<div class="elite-title">SIVIGILA VALIDADOR</div>', unsafe_allow_html=True)
         st.markdown('<div class="inst-label">Instituto Departamental de Salud de Norte de Santander</div>', unsafe_allow_html=True)

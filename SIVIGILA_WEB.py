@@ -85,26 +85,40 @@ st.markdown("""
             transition: 0.3s ease;
         }
         
-        /* Botón de Fusión IDS */
+        /* Botón de Acción SIVIGILA VALIDADOR */
+        .stButton {
+            display: flex !important;
+            justify-content: center !important;
+            padding: 20px 0 !important;
+        }
+
         .stButton button {
-            background: linear-gradient(135deg, #FF3B30 0%, #B22222 100%) !important;
+            background: linear-gradient(135deg, #FF3B30 0%, #D70015 100%) !important;
             color: white !important;
-            border-radius: 24px !important;
-            border: none !important;
-            height: 80px !important;
+            border-radius: 40px !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            height: 90px !important;
             width: 100% !important;
-            font-size: 1.6rem !important;
+            max-width: 800px !important;
+            font-size: 2rem !important;
             font-weight: 800 !important;
-            box-shadow: 0 10px 30px rgba(255, 59, 48, 0.3) !important;
-            text-transform: uppercase;
-            transition: all 0.3s ease !important;
-            margin-top: 20px !important;
+            letter-spacing: 2px !important;
+            text-transform: uppercase !important;
+            box-shadow: 0 15px 45px rgba(255, 59, 48, 0.3) !important;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+            margin: 0 auto !important;
+            display: block !important;
         }
 
         .stButton button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255, 59, 48, 0.5) !important;
-            filter: brightness(1.1);
+            transform: translateY(-8px) scale(1.02) !important;
+            box-shadow: 0 25px 80px rgba(255, 59, 48, 0.6) !important;
+            filter: brightness(1.2) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        }
+
+        .stButton button:active {
+            transform: translateY(2px) scale(0.98) !important;
         }
 
         /* Métricas */
@@ -158,8 +172,8 @@ def main():
         if uploaded_files:
             st.markdown(f'<div style="color:#34C759; font-weight:700; font-size:1.1rem; text-align:center; padding-top:10px; margin-bottom: 20px;">🛡️ {len(uploaded_files)} ARCHIVOS OFICIALES DETECTADOS</div>', unsafe_allow_html=True)
             
-            # Triple columna para centrado garantizado
-            _, col_btn, _ = st.columns([1, 2, 1])
+            # Layout de ancho completo para el botón (mas largo)
+            _, col_btn, _ = st.columns([0.2, 7.6, 0.2])
             with col_btn:
                 if st.button("🚀 INICIAR CONSOLIDACIÓN"):
                     with st.status("🛠️ Ejecutando Motor SIVIGILA VALIDADOR...", expanded=False) as status:

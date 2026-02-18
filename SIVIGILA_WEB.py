@@ -101,6 +101,17 @@ def main():
                         st.error("No se encontró columna de fecha de notificación en los archivos.")
                         return
 
+                    # Filtro de Clasificación (Eliminar Sospechosos)
+                    # Buscamos columnas de clasificación tipicamente llamadas 'clasificaci', 'clasifica', 'cla_fin'
+                    col_clas = next((c for c in df_all.columns if 'clasific' in c or 'cla_fin' in c), None)
+                    if col_clas:
+                        status.write(f"🧹 Filtrando registros sospechosos en columna: {col_clas}...")
+                        df_all = df_all[~df_all[col_clas].astype(str).str.lower().str.contains('sospecho', na=False)]
+
+                    # Cálculo de Semana Epidemiológica (ISO year and week)
+                    df_all['semana_epi'] = df_all['fec_not_dt'].dt.isocalendar().week
+                    df_all['año_epi'] = df_all['fec_not_dt'].dt.isocalendar().year
+
                     df_all['_llave'] = (df_all['tip_ide_'].fillna('') + "-" + 
                                        df_all['num_ide_'].fillna('') + "-" + 
                                        df_all['cod_eve'].fillna(''))
@@ -119,13 +130,20 @@ def main():
                     df_final = df_all.sort_values(by=['epid', 'fec_not_dt'], 
                                                  ascending=[True, False]).groupby('epid').first().reset_index()
 
-                    # Eliminar columnas temporales
+                    # Eliminar columnas temporales internas pero dejamos las epi
                     df_final = df_final.drop(columns=['_llave', 'diff', 'epid', 'fec_not_dt'], errors='ignore')
 
-                    status.write("💾 Generando archivo Excel final...")
+                    status.write("� Generando resumen estadístico...")
+                    # Crear tabla de resumen por evento
+                    df_resumen = df_final.groupby('cod_eve').size().reset_index(name='total_casos_finales')
+                    if 'cod_eve' in df_resumen.columns:
+                        df_resumen = df_resumen.sort_values('total_casos_finales', ascending=False)
+
+                    status.write("�💾 Generando archivo Excel final con múltiples hojas...")
                     output = io.BytesIO()
                     with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-                        df_final.to_excel(writer, index=False, sheet_name='CONSOLIDADO')
+                        df_final.to_excel(writer, index=False, sheet_name='BASE_CONSOLIDADA')
+                        df_resumen.to_excel(writer, index=False, sheet_name='RESUMEN_EJECUTIVO')
                     
                     end_time = time.time()
                     total_time = end_time - start_time
@@ -133,12 +151,12 @@ def main():
                     status.update(label=f"✅ ¡Fusión completa en {total_time:.1f}s!", state="complete", expanded=False)
                     st.balloons()
                     
-                    st.success(f"✨ Se generaron {len(df_final):,} registros únicos.")
+                    st.success(f"✨ Se generaron {len(df_final):,} registros consolidados (Sospechosos eliminados).")
                     
                     st.download_button(
-                        label="📥 DESCARGAR CONSOLIDADO OFICIAL",
+                        label="📥 DESCARGAR CONSOLIDADO OFICIAL v5.2",
                         data=output.getvalue(),
-                        file_name=f"CONSOLIDADO_SIVIGILA_{datetime.now().strftime('%Y%m%d_%H%M')}.xlsx",
+                        file_name=f"SIVIGILA_ELITE_PRO_{datetime.now().strftime('%Y%m%d_%H%M')}.xlsx",
                         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                     )
 

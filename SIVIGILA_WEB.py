@@ -86,10 +86,10 @@ st.markdown("""
         }
         
         /* Botón de Fusión IDS */
-        div.stButton {
-            text-align: center;
-            display: flex;
-            justify-content: center;
+        .stButton {
+            display: flex !important;
+            justify-content: center !important;
+            width: 100% !important;
         }
         
         .stButton>button {
@@ -99,11 +99,11 @@ st.markdown("""
             border: none !important;
             height: 85px !important;
             width: 100% !important;
-            max-width: 900px !important;
+            max-width: 600px !important;
             font-size: 1.8rem !important;
             font-weight: 900 !important;
             box-shadow: 0 15px 45px rgba(255, 59, 48, 0.4) !important;
-            margin-top: 35px !important;
+            margin: 35px auto !important;
             text-transform: uppercase;
             transition: 0.4s all ease !important;
         }
@@ -166,7 +166,7 @@ def main():
             st.markdown(f'<div style="color:#34C759; font-weight:700; font-size:1.1rem; text-align:center; padding-top:10px;">🛡️ {len(uploaded_files)} ARCHIVOS OFICIALES DETECTADOS</div>', unsafe_allow_html=True)
             
             if st.button("🚀 INICIAR CONSOLIDACIÓN"):
-                with st.status("🛠️ Ejecutando Motor SIVIGILA ELITE...", expanded=False) as status:
+                with st.status("🛠️ Ejecutando Motor SIVIGILA VALIDADOR...", expanded=False) as status:
                     try:
                         start_time = time.time()
                         mapeo = {'num_ide_': ['num_ide_', 'num_ide', 'identificacion', 'documento'], 'tip_ide_': ['tip_ide_', 'tip_ide', 'tipo_id', 'tipo_doc'], 'cod_eve': ['cod_eve', 'evento', 'codigo_evento'], 'fec_not': ['fec_not', 'fecha_notificacion']}

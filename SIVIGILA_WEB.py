@@ -133,7 +133,7 @@ def main():
             # Icono fallback elegante
             st.markdown('<div style="font-size: 70px; margin-bottom: 20px;">🏥</div>', unsafe_allow_html=True)
 
-        st.markdown('<div class="elite-title">SIVIGILA ELITE</div>', unsafe_allow_html=True)
+        st.markdown('<div class="elite-title">SIVIGILA VALIDADOR</div>', unsafe_allow_html=True)
         st.markdown('<div class="inst-label">Instituto Departamental de Salud de Norte de Santander</div>', unsafe_allow_html=True)
         st.markdown('<div class="obs-label">Observatorio de Salud Pública</div>', unsafe_allow_html=True)
         

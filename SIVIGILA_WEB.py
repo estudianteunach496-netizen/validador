@@ -86,23 +86,32 @@ st.markdown("""
         }
         
         /* Botón de Fusión IDS */
+        div.stButton {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+        
         .stButton>button {
             background: linear-gradient(135deg, #FF3B30 0%, #B22222 100%) !important;
             color: white !important;
             border-radius: 24px !important;
             border: none !important;
-            height: 80px !important;
+            height: 85px !important;
             width: 100% !important;
-            font-size: 1.7rem !important;
+            max-width: 900px !important;
+            font-size: 1.8rem !important;
             font-weight: 900 !important;
-            box-shadow: 0 15px 40px rgba(255, 59, 48, 0.4) !important;
-            margin-top: 30px !important;
+            box-shadow: 0 15px 45px rgba(255, 59, 48, 0.4) !important;
+            margin-top: 35px !important;
             text-transform: uppercase;
+            transition: 0.4s all ease !important;
         }
 
         .stButton>button:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.01);
             box-shadow: 0 25px 60px rgba(255, 59, 48, 0.6) !important;
+            filter: brightness(1.2);
         }
 
         /* Métricas */

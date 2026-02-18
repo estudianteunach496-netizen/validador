@@ -217,11 +217,17 @@ def main():
                             df_all['epid'] = pd.Series(es_nuevo).fillna(True).cumsum()
                             
                             df_final = df_all.sort_values(by=['epid', 'fec_not_dt'], ascending=[True, False]).groupby('epid').first().reset_index()
+                            
+                            # Resumen por evento
+                            df_resumen = df_final.groupby('cod_eve').size().reset_index(name='total_casos') if 'cod_eve' in df_final.columns else pd.DataFrame()
+
                             df_final = df_final.drop(columns=['_llave', 'diff', 'epid', 'fec_not_dt'], errors='ignore')
                             
                             output = io.BytesIO()
                             with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
                                 df_final.to_excel(writer, index=False, sheet_name='CONSOLIDADO')
+                                if not df_resumen.empty:
+                                    df_resumen.to_excel(writer, index=False, sheet_name='RESUMEN_EVENTOS')
                             
                             total_time = time.time() - start_time
                             status.update(label="✅ ÉXITO", state="complete")

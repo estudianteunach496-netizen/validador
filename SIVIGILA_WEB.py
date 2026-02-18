@@ -9,9 +9,10 @@ from datetime import datetime
 
 # Configuración de página
 st.set_page_config(
-    page_title="IDENTIDAD IDS | SIVIGILA ELITE",
+    page_title="SIVIGILA VALIDADOR | IDS Norte de Santander",
     page_icon="🏥",
     layout="wide",
+    initial_sidebar_state="collapsed"
 )
 
 # --- CSS DE ALTA GAMA (Sin cajas fantasma) ---

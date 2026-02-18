@@ -71,7 +71,7 @@ st.markdown("""
 
         /* Estilo para el Logo */
         .logo-img {
-            max-width: 220px;
+            max-width: 160px;
             margin-bottom: 25px;
             filter: drop-shadow(0 10px 20px rgba(255, 59, 48, 0.2));
         }
